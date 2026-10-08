@@ -1,0 +1,367 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12091f">
+
+  <title>Happy Birthday Kritika 🎂</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 105, 180, 0.18), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(155, 89, 255, 0.20), transparent 30%),
+        linear-gradient(135deg, #090612, #160b22, #0c0715);
+      color: white;
+      font-family: "DM Sans", sans-serif;
+    }
+
+    /* Ambient glow */
+    .glow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow.one {
+      background: #ff4fa3;
+      top: -100px;
+      left: -100px;
+    }
+
+    .glow.two {
+      background: #8b5cf6;
+      right: -100px;
+      bottom: -100px;
+    }
+
+    /* Main card */
+    .container {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      width: min(92vw, 700px);
+      padding: 55px 35px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 30px;
+      background: rgba(255,255,255,0.055);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow:
+        0 25px 80px rgba(0,0,0,0.45),
+        inset 0 1px rgba(255,255,255,0.08);
+      animation: cardIn 1.2s ease forwards;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(35px) scale(.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .emoji {
+      font-size: 55px;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(0 8px 20px rgba(255, 105, 180, .3));
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    .small-title {
+      margin-top: 18px;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #f5b6da;
+    }
+
+    h1 {
+      margin-top: 12px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(48px, 10vw, 88px);
+      line-height: 1;
+      background: linear-gradient(90deg, #fff, #ffb5df, #d8b4fe, #fff);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shine 5s linear infinite;
+    }
+
+    @keyframes shine {
+      to { background-position: 250% center; }
+    }
+
+    .subtitle {
+      margin-top: 20px;
+      font-size: clamp(16px, 3vw, 20px);
+      color: rgba(255,255,255,.72);
+      line-height: 1.7;
+    }
+
+    .message {
+      max-width: 520px;
+      margin: 28px auto 0;
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.82);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .button {
+      margin-top: 30px;
+      border: none;
+      outline: none;
+      padding: 15px 28px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1b0b1d;
+      background: linear-gradient(135deg, #ffd0ec, #d8b4fe);
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(230, 150, 220, .22);
+      transition: .25s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(230, 150, 220, .35);
+    }
+
+    .button:active {
+      transform: scale(.96);
+    }
+
+    .wish {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: .8s ease;
+    }
+
+    .wish.show {
+      max-height: 150px;
+      opacity: 1;
+      margin-top: 20px;
+    }
+
+    .wish p {
+      font-family: "Playfair Display", serif;
+      font-size: 20px;
+      color: #ffd8ef;
+    }
+
+    .footer {
+      margin-top: 32px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,.38);
+    }
+
+    /* Hearts */
+    .heart {
+      position: fixed;
+      bottom: -30px;
+      pointer-events: none;
+      z-index: 1;
+      animation: heartFloat linear forwards;
+      opacity: .7;
+    }
+
+    @keyframes heartFloat {
+      0% {
+        transform: translateY(0) scale(.7) rotate(0);
+        opacity: 0;
+      }
+      15% {
+        opacity: .75;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.2) rotate(35deg);
+        opacity: 0;
+      }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 9px;
+      height: 14px;
+      top: -20px;
+      z-index: 20;
+      pointer-events: none;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: .9;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 15px;
+      }
+
+      .card {
+        padding: 42px 20px;
+        border-radius: 24px;
+      }
+
+      .emoji {
+        font-size: 45px;
+      }
+
+      .small-title {
+        font-size: 11px;
+        letter-spacing: 3px;
+      }
+
+      .message {
+        font-size: 14px;
+        padding: 18px;
+      }
+
+      .button {
+        width: 100%;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glow one"></div>
+  <div class="glow two"></div>
+
+  <main class="container">
+    <section class="card">
+
+      <div class="emoji">🎂</div>
+
+      <div class="small-title">
+        A little celebration for
+      </div>
+
+      <h1>Kritika</h1>
+
+      <p class="subtitle">
+        Happy Birthday! ✨<br>
+        May your day be as beautiful as your smile.
+      </p>
+
+      <div class="message">
+        Here's to another year of amazing memories,
+        unexpected adventures, endless laughter,
+        and all the happiness you deserve. 💗
+        <br><br>
+        Keep shining, keep smiling,
+        and never stop being wonderfully you.
+      </div>
+
+      <button class="button" onclick="makeWish()">
+        ✨ Make a Wish
+      </button>
+
+      <div class="wish" id="wish">
+        <p>
+          🌙 May every little wish of yours<br>
+          find its way to you. 💫
+        </p>
+      </div>
+
+      <div class="footer">
+        MADE WITH ♡ FOR KRITIKA
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    /* -------------------------
+       CONFETTI
+    ------------------------- */
+
+    const confettiColors = [
+      "#ff7eb6",
+      "#ffd166",
+      "#c4b5fd",
+      "#7dd3fc",
+      "#ffffff",
+      "#f9a8d4"
+    ];
+
+    function createConfetti(amount = 160) {
+      for (let i = 0; i < amount; i++) {
+
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background =
+          confettiColors[Math.floor(Math.random() * confettiColors.length)];
+
+        piece.style.width = (Math.random() * 7 + 5) + "px";
+        piece.style.height = (Math.random() * 9 + 7) + "px";
+
+        piece.style.animationDuration =
+          (Math.random() * 3 + 3) + "s";
+
+        piece.style.animationDelay =
+          Math.random() * 2 + "s";
+
+        piece.style.transform =
+          `rotate(${Math.random() * 360}deg)`;
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+       
